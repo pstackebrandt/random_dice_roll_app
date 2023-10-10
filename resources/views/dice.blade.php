@@ -1,12 +1,3 @@
-<?php
-    $author = "Peter Stackebrandt";
-    $projectDesignDate = "Oktober 2023";
-
-    $diceCount = 1;
-    $diceType = "d4";
-    $lastRollResult = 0;
-?>
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -23,44 +14,57 @@
 
 <body>
     <header>
-        <div name="author">Author: {{ $author }}</div>
-        <div name="project-date">Project design date: {{ $projectDesignDate }}</div>
+        <div name="author">Author: {{ $author ?? 'Unknown' }}</div>
+        <div name="project-date">Project design date: {{ $projectDesignDate ?? 'Unknown' }}</div>
     </header>
     <main>
         <h1>Dice Roller</h1>
         <div>Let's roll the dice</div>
 
-        <p>Structure of this page</p>
+        @if ($errors->any())
+        <div>
+            <strong>Fehler:</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
         <form action="/roll-dice" method="POST">
             @csrf
-            <input type="hidden" name="diceSelection" value="d4">
+            {{-- Choose dice type --}}
+            <div>
+                <label for="diceType">Choose a dice type:</label>
+                <select id="diceType" name="diceType">
+                    <option value="d4" {{ $diceType=='d4' ? 'selected' : '' }}>d4</option>
+                    <option value="d6" {{ $diceType=='d6' ? 'selected' : '' }}>d6</option>
+                    <option value="d8" {{ $diceType=='d8' ? 'selected' : '' }}>d8</option>
+                    <option value="d10" {{ $diceType=='d10' ? 'selected' : '' }}>d10</option>
+                    <option value="d12" {{ $diceType=='d12' ? 'selected' : '' }}>d12</option>
+                    <option value="d20" {{ $diceType=='d20' ? 'selected' : '' }}>d20</option>
+                </select>
+            </div>
 
-            <label for="diceType">Choose a dice type:</label>
-            <label id="diceTypeError"></label>
-            <p> A d4 dice has 4 sides with the numbers 1, 2, 3 and 4 on them. </p>
-            <select id="diceType" name="diceType">
-                <option value="d4">d4</option>
-                <option value="d6">d6</option>
-                <option value="d8">d8</option>
-                <option value="d10">d10</option>
-                <option value="d12">d12</option>
-                <option value="d20">d20</option>
-            </select>
-
-            <label for="diceCount">How many dice do you want to roll in 1 throw?</label>
-            <label id="diceCountError"></label>
-            <input type="number" id="diceCount" name="diceCount" min="1" max="10" value="{{$diceCount}}">
+            <br>
+            <div>
+                {{-- Choose dice count --}}
+                <label for="diceCount">How many dice do you want to roll in 1 throw?</label>
+                <input type="number" id="diceCount" name="diceCount" min="1" max="10" value="{{ $diceCount ?? 1 }}">
+            </div>
             <input type="submit" value="Roll">
         </form>
 
-        <br><hr><br>
+        <br>
+        <hr><br>
 
-        <label for="lastRollResult">Last roll result</label>
-        <div id="lastRollResult"></div>
-
+        <div>
+            {{-- Show roll result --}}
+            <label for="lastRollResult">Last roll result</label>
+            <div id="lastRollResult">{{ $lastRollResult ?? 'No rolls yet.' }}</div>
+        </div>
     </main>
-    </div>
 </body>
 
 </html>

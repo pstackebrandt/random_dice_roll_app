@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dice');
-});
+// Start dice select at default page
+Route::get('/', [DiceController::class, 'showForm']);
 
+// Show the larvel documentation
 Route::get('/doc', function () {
     return view('welcome');
 });
 
-Route::get('/dice', function () {
-    return view('dice');
-});
+// Show the dice select form
+Route::get('/select-dice', [DiceController::class, 'showForm']);
+
+// Roll the dice
+Route::post('/roll-dice', [DiceController::class, 'rollDice']);
