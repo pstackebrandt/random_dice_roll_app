@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Controller for the dice roller.
+ */
 class DiceController extends Controller
 {
     public function showForm()
@@ -16,7 +19,7 @@ class DiceController extends Controller
             'diceType' => 'd4',
             'lastRollResult' => session('lastRollResult', 0),
         ];
-        return view('dice', $data);
+        return view('dice-roller', $data);
     }
 
     public function rollDice(Request $request)
