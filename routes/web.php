@@ -14,16 +14,23 @@ use App\Http\Controllers\DiceController;
 |
 */
 
-// Start dice select at default page
-Route::get('/', [DiceController::class, 'showForm']);
+/**
+ * Call start page.
+ * Show the dice roller form with initial values.
+ */
+Route::get('/', [DiceController::class, 'showDiceRollerFormInitially']);
 
-// Show the larvel documentation
+// Show the laravel documentation
 Route::get('/doc', function () {
     return view('welcome');
 });
 
-// Show the dice select form
-Route::get('/select-dice', [DiceController::class, 'showForm']);
+/**
+ * Show the dice roller form with initial values
+ */
+Route::get('/select-dice', [DiceController::class, 'showDiceRollerFormInitially']);
 
-// Roll the dice
+/**
+ * Roll the dice and return the roll result to the dice roller view.
+ */
 Route::post('/roll-dice', [DiceController::class, 'rollDice']);
