@@ -1,5 +1,4 @@
 {{-- file name: dice-roller.blade.php --}}
-
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -38,29 +37,37 @@
     {{-- Select die/dice for next roll and start the roll. --}}
     <form action="/roll-dice" method="POST">
         @csrf
+        <input type="hidden" name="selectDiceForm">
         {{-- Choose dice type --}}
         <div>
             <label for="diceType">Choose a dice type:</label>
             <select id="diceType" name="diceType">
-                <option value="d4" {{ $diceType=='d4' ? 'selected' : '' }}>d4</option>
-                <option value="d6" {{ $diceType=='d6' ? 'selected' : '' }}>d6</option>
-                <option value="d8" {{ $diceType=='d8' ? 'selected' : '' }}>d8</option>
-                <option value="d10" {{ $diceType=='d10' ? 'selected' : '' }}>d10</option>
-                <option value="d12" {{ $diceType=='d12' ? 'selected' : '' }}>d12</option>
-                <option value="d20" {{ $diceType=='d20' ? 'selected' : '' }}>d20</option>
-{{--                This seems not to lead to error show --}}
-                <option value="Not existing die" {{ $diceType=='not existing die' ? 'selected' : '' }}>Not existing die</option>
+                <option value="d4" {{ old('diceType', $diceType) == 'd4' ? 'selected' : '' }}>d4</option>
+                <option value="d6" {{ old('diceType', $diceType) == 'd6' ? 'selected' : '' }}>d6</option>
+                <option value="d8" {{ old('diceType', $diceType) == 'd8' ? 'selected' : '' }}>d8</option>
+                <option value="d10" {{ old('diceType', $diceType) == 'd10' ? 'selected' : '' }}>d10</option>
+                <option value="d12" {{ old('diceType', $diceType) == 'd12' ? 'selected' : '' }}>d12</option>
+                <option value="d20" {{ old('diceType', $diceType) == 'd20' ? 'selected' : '' }}>d20</option>
+                {{--                Value is required to check validation behaviour --}}
+                <option
+                    value="Not existing die" {{ old('diceType', $diceType) == 'Not existing die' ? 'selected' : '' }}>
+                    Not existing die
+                </option>
             </select>
+
             <br>
-            <sub>(Choose 'Not existing die' to watch error handling.) --}}</sub>
+            <sub>(Choose 'Not existing die' to watch error handling.)</sub>
         </div>
 
         <br>
         <div>
             {{-- Choose dice count --}}
             <label for="diceCount">How many dice do you want to roll in 1 throw?</label>
-            <input type="number" id="diceCount" name="diceCount" min="1" max="10" value="{{ $diceCount ?? 1 }}">
+            <input type="number" id="diceCount" name="diceCount" min="1" max="11"
+                   value="{{ old('diceCount', $diceCount) }}">
+            {{--                Value 11 is required to check validation behaviour --}}
             <br>
+            <sub>(Choose '11' to watch error handling.)</sub>
         </div>
         <input type="submit" value="Roll">
     </form>
@@ -68,7 +75,9 @@
 
     <div>
         <h1>Debugging</h1>
-        {!! print_r($lastRollResult, return: true) !!}
+        <p>$lastRollResult: {!! print_r($lastRollResult, return: true) !!}
+        <p>$diceCount: {!! print_r($diceCount, return: true) !!}</p>
+        <p>$diceCount: {!! print_r($diceType, return: true) !!}</p>
     </div>
 
     <br>

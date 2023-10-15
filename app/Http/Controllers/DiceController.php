@@ -20,6 +20,11 @@ class DiceController extends Controller
      */
     public function showDiceRollerFormInitially(): View
     {
+        /**
+         * Result values of the previous dice roll or empty default values.
+         * (The values should be used for display of last roll result only.
+         * Not to be used for the selectDiceForm.)
+         */
         $lastRollResult = session('lastRollResult', [
             'diceCount' => 0,
             'diceType' => '',
@@ -30,8 +35,8 @@ class DiceController extends Controller
         $data = [
             'author' => 'Peter Stackebrandt',
             'projectDesignDate' => 'Oktober 2023',
-            'diceCount' => 3,
-            'diceType' => 'd4',
+            'diceCount' => 3, // default value for form
+            'diceType' => 'd4', // default value for form
             'lastRollResult'  => $lastRollResult,
         ];
         return view('dice-roller', $data);

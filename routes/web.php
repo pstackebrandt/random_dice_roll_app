@@ -1,4 +1,5 @@
 <?php
+// file name: routes/web.php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiceController;
