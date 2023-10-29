@@ -25,7 +25,7 @@
 
     @if ($errors->any())
         <div>
-            <strong>Fehler:</strong>
+            <strong>Error:</strong>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -69,6 +69,7 @@
             <br>
             <sub>(Choose '11' to watch error handling.)</sub>
         </div>
+        <br>
         <input type="submit" value="Roll">
     </form>
 
@@ -90,8 +91,8 @@
             <h2>Result of last roll</h2>
             <div>
                 {{-- Show roll result --}}
-                <label for="lastRollResult">Total score</label>
-                <div id="lastRollResult">{{ $lastRollResult['rolledTotalScore'] ?? 'No rolls yet.' }}</div>
+                <label for="lastRollResult">Total score:</label>
+                <span id="lastRollResult">{{ $lastRollResult['rolledTotalScore'] ?? 'No rolls yet.' }}</span>
                 <br>
             </div>
 
@@ -105,10 +106,11 @@
 
             <div>
                 {{--            Show score of each roll in a table --}}
-                <label for="rolledDiceScores">Score of each dice</label>
+                <label for="rolledDiceScores">Score of each dice:</label>
+                <br>
                 <table id="rolledDiceScores">
                     <tr>
-                        <th>Dice Number</th>
+                        <th>Dice count</th>
                         <th>Score</th>
                     </tr>
                     @foreach ($lastRollResult['rolledScores'] as $key => $value)
