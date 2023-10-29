@@ -56,6 +56,7 @@
             </select>
 
             <br>
+            <sub>A d4 die has 4 sides with score 1 to 4.</sub><br>
             <sub>(Choose 'Not existing die' to watch error handling.)</sub>
         </div>
 
@@ -96,14 +97,16 @@
                 <br>
             </div>
 
+            <br>
             <div>
                 {{--            Show Type and count of rolled dices--}}
-                <label for="rolledDiceCountAndType">Count and type of dices</label>
-                <div id="rolledDiceCountAndType">{{ $lastRollResult['diceCount'] ?? 'diceCount is null'}} dices of
-                    type {{$lastRollResult['diceType'] ?? 'diceType is null'}}</div>
+                <label for="rolledDiceCountAndType">Count and type of dices: </label>
+                <span id="rolledDiceCountAndType">{{ $lastRollResult['diceCount'] ?? 'diceCount is null'}} dices of
+                    type {{$lastRollResult['diceType'] ?? 'diceType is null'}}</span>
                 <br>
             </div>
 
+            <br>
             <div>
                 {{--            Show score of each roll in a table --}}
                 <label for="rolledDiceScores">Score of each dice:</label>
