@@ -15,69 +15,70 @@
 </head>
 
 <body>
-<header>
-    <div id="author">Author: {{ $author ?? 'Unknown' }}</div>
-    <div id="project-date">Project design date: {{ $projectDesignDate ?? 'Unknown' }}</div>
+<header class="flex-container">
+    <div id="author" class="flex-item">Author: {{ $author ?? 'Unknown' }}</div>
+    <div id="project-date" class="flex-item">Project design date: {{ $projectDesignDate ?? 'Unknown' }}</div>
 </header>
-<main>
-    <h1>Dice Roller</h1>
-    <div>Let's roll the dice</div>
-    <br>
+<main class="flex-container">
+    <div id="page-title-area" class="page-title-area">
+        <h1>Dice Roller</h1>
+        <p class="slogan">Let's roll the dice</p>
+    </div>
 
-    @if ($errors->any())
-        <div>
-            <strong>Error:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <div id="select-dice-area">
+        @if ($errors->any())
+            <div>
+                <strong>Error:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    {{-- Select die/dice for next roll and start the roll. --}}
-    <form action="/roll-dice" method="POST">
-        @csrf
-        <input type="hidden" name="selectDiceForm">
-        {{-- Choose dice type --}}
-        <div>
-            <label for="diceType">Choose a dice type:</label>
-            <select id="diceType" name="diceType">
-                <option value="d4" {{ old('diceType', $diceType) == 'd4' ? 'selected' : '' }}>d4</option>
-                <option value="d6" {{ old('diceType', $diceType) == 'd6' ? 'selected' : '' }}>d6</option>
-                <option value="d8" {{ old('diceType', $diceType) == 'd8' ? 'selected' : '' }}>d8</option>
-                <option value="d10" {{ old('diceType', $diceType) == 'd10' ? 'selected' : '' }}>d10</option>
-                <option value="d12" {{ old('diceType', $diceType) == 'd12' ? 'selected' : '' }}>d12</option>
-                <option value="d20" {{ old('diceType', $diceType) == 'd20' ? 'selected' : '' }}>d20</option>
-                {{--                Value is required to check validation behaviour --}}
-                <option
-                    value="Not existing die" {{ old('diceType', $diceType) == 'Not existing die' ? 'selected' : '' }}>
-                    Not existing die
-                </option>
-            </select>
+        {{-- Select die/dice for next roll and start the roll. --}}
+        <form action="/roll-dice" method="POST">
+            @csrf
+            <input type="hidden" name="selectDiceForm">
+            <h2>Prepare your roll</h2>
 
-            <br>
-            <sub>A d4 die has 4 sides with score 1 to 4.</sub><br>
-            <sub>(Choose 'Not existing die' to watch error handling.)</sub>
-        </div>
+            {{-- Choose dice type --}}
+            <div>
+                <label for="diceType">Choose a dice type:</label>
+                <select id="diceType" name="diceType">
+                    <option value="d4" {{ old('diceType', $diceType) == 'd4' ? 'selected' : '' }}>d4</option>
+                    <option value="d6" {{ old('diceType', $diceType) == 'd6' ? 'selected' : '' }}>d6</option>
+                    <option value="d8" {{ old('diceType', $diceType) == 'd8' ? 'selected' : '' }}>d8</option>
+                    <option value="d10" {{ old('diceType', $diceType) == 'd10' ? 'selected' : '' }}>d10</option>
+                    <option value="d12" {{ old('diceType', $diceType) == 'd12' ? 'selected' : '' }}>d12</option>
+                    <option value="d20" {{ old('diceType', $diceType) == 'd20' ? 'selected' : '' }}>d20</option>
+                    {{--                Value is required to check validation behaviour --}}
+                    <option
+                        value="Not existing die" {{ old('diceType', $diceType) == 'Not existing die' ? 'selected' : '' }}>
+                        Not existing die
+                    </option>
+                </select>
 
-        <br>
-        <div>
-            {{-- Choose dice count --}}
-            <label for="diceCount">How many dice do you want to roll in 1 throw?</label>
-            <input type="number" id="diceCount" name="diceCount" min="1" max="11"
-                   value="{{ old('diceCount', $diceCount) }}">
-            {{--                Value 11 is required to check validation behaviour --}}
-            <br>
-            <sub>(Choose '11' to watch error handling.)</sub>
-        </div>
-        <br>
-        <input type="submit" value="Roll">
-    </form>
+                <sub>A d4 die has 4 sides with score 1 to 4.</sub><br>
+                <sub>(Choose 'Not existing die' to watch error handling.)</sub>
+            </div>
 
+            <div>
+                {{-- Choose dice count --}}
+                <label for="diceCount">How many dice do you want to roll in 1 throw?</label>
+                <input type="number" id="diceCount" name="diceCount" min="1" max="11"
+                       value="{{ old('diceCount', $diceCount) }}">
+                {{--                Value 11 is required to check validation behaviour --}}
+                <br>
+                <sub>(Choose '11' to watch error handling.)</sub>
+            </div>
+            <input type="submit" value="Roll">
+        </form>
+    </div>
 
-    <div>
-        <h1>Debugging</h1>
+    <div id="debugging-area">
+        <h2>Debugging</h2>
         <p>$lastRollResult: {!! print_r($lastRollResult, return: true) !!}
         <p>$diceCount: {!! print_r($diceCount, return: true) !!}</p>
         <p>$diceCount: {!! print_r($diceType, return: true) !!}</p>
@@ -88,7 +89,7 @@
     <br>
 
     <div>
-        <h1>Roll results</h1>
+        <h2>Roll results</h2>
         @if (isset($lastRollResult) && $lastRollResult['diceCount'] > 0 )
             <h2>Result of last roll</h2>
             <div>
