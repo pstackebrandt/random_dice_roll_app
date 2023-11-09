@@ -26,22 +26,22 @@
     </div>
 
     <div id="select-dice-area">
-        @if ($errors->any())
-            <div>
-                <strong>Error:</strong>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         {{-- Select die/dice for next roll and start the roll. --}}
         <form action="/roll-dice" method="POST">
             @csrf
             <input type="hidden" name="selectDiceForm">
             <h2>Prepare your roll</h2>
+            @if ($errors->any())
+                <div class="error-viewer-area">
+                    <p class="error-viewer-heading">Error</p>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="error-viewer">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             {{-- Choose dice type --}}
             <div>
@@ -76,17 +76,6 @@
             <input type="submit" value="Roll">
         </form>
     </div>
-
-    <div id="debugging-area">
-        <h2>Debugging</h2>
-        <p>$lastRollResult: {!! print_r($lastRollResult, return: true) !!}
-        <p>$diceCount: {!! print_r($diceCount, return: true) !!}</p>
-        <p>$diceCount: {!! print_r($diceType, return: true) !!}</p>
-    </div>
-
-    <br>
-    <hr>
-    <br>
 
     <div>
         <h2>Roll results</h2>
@@ -133,6 +122,17 @@
                 <p><strong>No rolls yet</strong></p>
             </div>
         @endif
+
+        <br>
+        <hr>
+        <br>
+
+        <div id="debugging-area">
+            <h2>Debugging</h2>
+            <p>$lastRollResult: {!! print_r($lastRollResult, return: true) !!}
+            <p>$diceCount: {!! print_r($diceCount, return: true) !!}</p>
+            <p>$diceCount: {!! print_r($diceType, return: true) !!}</p>
+        </div>
     </div>
 
 </main>
